@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cero.cm.db.mapper.test.TestMapper">
+    <select id="findTestResponse" resultType="com.cero.cm.biz.v1.unauthenticated.test.TestResponse">
+        SELECT
+            *
+        FROM tb_event_enum
+        LIMIT 1;
+    </select>
+</mapper>

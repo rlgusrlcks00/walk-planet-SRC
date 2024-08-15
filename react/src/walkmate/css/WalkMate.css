@@ -1,0 +1,37 @@
+/* WalkMate.css */
+
+.step-info-container {
+  padding: 20px;
+  text-align: center;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.title {
+  margin-bottom: 20px;
+}
+
+.earth-container {
+  perspective: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.earth {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-size: cover;
+}
+
+.progress-container {
+  text-align: left;
+}
+
+.progress-indicator {
+  margin-top: 20px;
+}

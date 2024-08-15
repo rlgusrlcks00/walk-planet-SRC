@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>카본제로 FAQ</title>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            background: #30343AFF;
+            color: #fff;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        h1{
+            padding: 60px 20px 0px 20px;
+            font-size: 24pt;
+            line-height:0.2em;
+        }
+
+        h3 {
+            padding: 0px 20px;
+            font-weight: 400;
+            color: #ccc;
+            font-size: 14pt;
+        }
+
+        ul {
+            padding-inline-start: 0;
+        }
+
+        li {
+            list-style-type: none;
+        }
+
+        .faq-list-wrap {
+            margin: 60px 8% 0px 8%;
+        }
+
+        .input01 {
+            width: calc(74% - 70px);
+            height: 18px;
+            font-size: 12pt;
+            vertical-align: middle;
+            padding: 10px;
+            border-radius: 5px;
+            border: 0px;
+        }
+
+        .button01 {
+            width: 70px;
+            height: 38px;
+            font-size: 12pt;
+            vertical-align: middle;
+            background: #00b295;
+            border: 0px;
+            border-radius: 5px;
+            color: #fff;
+        }
+
+        .list01 {
+            padding: 30px 0px 20px 0px;
+        }
+
+        .question01 {
+            font-size: 12pt;
+        }
+
+        .answer01 {
+            display: none;
+            border-radius: 8px;
+            background: rgb(83 83 83);
+            margin-top: 10px;
+            padding: 18px;
+            font-size: 12pt;
+            color: rgb(254 254 254);
+        }
+
+        .li-style {
+            vertical-align: middle;
+            text-align: center;
+            margin: 0 auto;
+            width: 26px;
+            height: 20px;
+            border: none;
+            border-radius: 50%;
+            background: #535353;
+            color: #fff;
+            display: inline-block;
+            padding-top: 6px;
+            margin-right: 6px;
+        }
+        .li-style2 {
+            vertical-align: middle;
+            text-align: center;
+            margin: 0 auto;
+            display: inline-block;
+            margin-right: 6px;
+        }
+        .li-title {
+            display: inline-block;
+            position: relative;
+        }
+        .li-style3 {
+            vertical-align: middle;
+            text-align: center;
+            margin: 0 auto;
+            display: inline-block;
+            margin-right: 10px;
+        }
+        .li-answer {
+            display: inline-block;
+            position: relative;
+            vertical-align: top;
+        }
+    </style>
+</head>
+<body>
+    <h1>카본제로 FAQ</h1>
+    <h3 style="">카본제로 기본 사용법 및 자주 묻는 질문</h3>
+
+    <form name="form1" method="get">
+        <div style="margin-top: 40px;text-align: center;">
+            <input type="text" class="input01" name="searchTxt" th:value="${searchTxt}">
+            <button class="button01" onclick="fnDoSearch()">검색</button>
+        </div>
+    </form>
+
+    <div class="faq-list-wrap">
+        <input type="hidden" id="total" th:value="${list.result.content.size()}">
+        <ul>
+            <th:block th:each="list, i : ${list.result.content}">
+                <li>
+                    <div class="list01">
+                        <div th:id="${'q' + i.index}" th:num="${i.index}" th:onclick="fnDoView(this.getAttribute('num'))" class="question01">
+                            <span th:id="${'m' + i.index}" class="li-style2"><img src="https://cbzero.s3.ap-southeast-1.amazonaws.com/view/Q_nomal.svg" th:id="${'i' + i.index}"></span>
+<!--                            <span th:id="${'m' + i.index}" class="li-style">Q</span>-->
+                            <span th:text="${list.title}" class="li-title"></span>
+                        </div>
+                        <div class="answer01" th:id="${'a' + i.index}">
+                            <div class="li-style3"><img src="https://cbzero.s3.ap-southeast-1.amazonaws.com/view/A_Active.svg" ></div>
+                            <div class="li-answer" th:id="${'an' + i.index}" th:text="${list.ctnt}"></div>
+                        </div>
+                    </div>
+                </li>
+            </th:block>
+        </ul>
+    </div>
+    <div style="height: 200px;">&nbsp;</div>
+</body>
+
+<script>
+
+    fnDoView(0);
+
+    function fnDoView(val) {
+
+        //console.log("val : " + val);
+        const total = document.getElementById("total").value;
+
+        for(let i = 0; i < total; i++){
+
+            if(val != i){
+                document.getElementById("a" + i).style.display = "none";
+                document.getElementById("i" + i).src = "https://cbzero.s3.ap-southeast-1.amazonaws.com/view/Q_nomal.svg";
+            }
+            else if(val == i) {
+                if (document.getElementById("a" + i).style.display == "none") {
+
+                    document.getElementById("i" + i).src = "https://cbzero.s3.ap-southeast-1.amazonaws.com/view/Q_Active.svg";
+                    let text = document.getElementById("an" + i).innerHTML;
+                    console.log("text : " + text);
+
+                    document.getElementById("an" + i).innerHTML = text.replace(/(\n|\r\n)/g, '<br>');
+                    document.getElementById("a" + i).style.display = "block";
+                    //console.log("i : " + i);
+                } else {
+                    document.getElementById("i" + i).src = "https://cbzero.s3.ap-southeast-1.amazonaws.com/view/Q_nomal.svg";
+                    let text = document.getElementById("an" + i).innerHTML;
+                    //console.log("text : " + text);
+
+                    document.getElementById("an" + i).innerHTML = text.replace(/(\n|\r\n)/g, '<br>');
+                    document.getElementById("a" + i).style.display = "none";
+                }
+
+            }
+
+        }
+    }
+
+    function fnDoSearch(){
+        const form = document.form1;
+        form.submit();
+    }
+</script>
+</html>
